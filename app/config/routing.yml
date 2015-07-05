@@ -1,0 +1,11 @@
+persons:
+    resource: Home\MyPractoBundle\Controller\PersonsController
+    type: rest
+
+persons_constrained:
+    resource: Home\MyPractoBundle\Controller\PersonsController
+    type:     annotation
+    defaults: {_format: json}
+    requirements:
+        patientId: \d+
+        _format: json|html|pdf
