@@ -3,11 +3,15 @@
 namespace Home\MyPractoBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use FOS\Rest\Util\Codes;
+use FOS\RestBundle\View\View;
 
 /**
  * Person Controller - This controller is used for CRUD operation on Person
  *
  * @Route("/persons")
+ *
  */
 class PersonsController extends Controller
 {
@@ -22,7 +26,11 @@ class PersonsController extends Controller
      */
     public function getPersonAction($personId)
     {
-
+    	$data = array(
+    		'name' => 'Ms. India',
+    		'id' => $personId,
+    		);
+    	return array('persons' => $data);
     }
 
     /**
@@ -31,7 +39,10 @@ class PersonsController extends Controller
      */
     public function getPersonsAction()
     {
-    	var_dump("No Person");
+    	$data = array(
+    		'name' => 'Mr. India',
+    		);
+    	return array('persons' => $data);
     }
 
     /**
