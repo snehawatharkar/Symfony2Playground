@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="test_lab_orders")
  * @ORM\Entity()
  */
-class TestLabOrders
+class TestLabOrder
 {
 
     /**
@@ -42,7 +42,7 @@ class TestLabOrders
     /**
      * @var integer $testLab
      *
-     * @ORM\ManyToOne(targetEntity="TestLabs")
+     * @ORM\ManyToOne(targetEntity="TestLab")
      * @ORM\JoinColumn(name="test_lab_id", nullable=true)
      */
     protected $testLab;
@@ -50,7 +50,7 @@ class TestLabOrders
     /**
      * @var integer $testExpense
      *
-     * @ORM\ManyToOne(targetEntity="TestExpenses")
+     * @ORM\ManyToOne(targetEntity="TestExpense")
      * @ORM\JoinColumn(name="test_expense_id", nullable=true)
      */
     protected $testExpense;

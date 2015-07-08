@@ -19,10 +19,10 @@ class AppKernel extends Kernel
 				new Symfony\Bundle\MonologBundle\MonologBundle(),
 				new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
 				new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+				new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
 				new Home\MyPractoBundle\HomeMyPractoBundle(),
 				new FOS\RestBundle\FOSRestBundle(),
 				new JMS\SerializerBundle\JMSSerializerBundle(),
-            	new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
 				new Symfony\Bundle\AsseticBundle\AsseticBundle(),
 				new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 				);

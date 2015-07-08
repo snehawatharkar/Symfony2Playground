@@ -6,10 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * Home\MyPractoBundle\Entity\Person
  *
  * @ORM\Table(name="persons")
- * @ORM\Entity()
- * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\Entity(repositoryClass="PersonRepository")
  */
 class Person
 {
@@ -42,6 +42,13 @@ class Person
 	 * @ORM\Column(name="mobile", type="string")
 	 */
 	protected $mobile;
+
+	/**
+	 * @var integer $softDeteleted
+	 *
+	 * @ORM\Column(name="soft_deleted", type="integer")
+	 */
+	protected $softDeleted;
 
 	/**
      * Get id
@@ -126,18 +133,40 @@ class Person
 	{
 		$this->mobile = $mobile;
 	}
-	 /**
+
+	/**
+	 * Soft Deleted
+	 *
+	 * @return integer
+	 */
+	public function getSoftDeleted()
+	{
+		return $this->softDeleted;
+	}
+
+	/**
+	 * Soft Deleted
+	 *
+	 * @param integer $softDeleted - Soft Deleted
+	 */
+	public function setSoftDeleted($softDeleted)
+	{
+		$this->softDeleted = $softDeleted;
+	}
+	/**
      * Serialise
      *
      * @return array
      */
     public function serialise()
     {
-        $data = array_merge(array(
+        $data = array(
+        	'id' => $this->getId(),
             'name' => $this->getName(),
             'email' => $this->getEmail(),
             'mobile' => $this->getMobile(),
-        ), parent::serialise());
+            'soft_deleted' => $this->getSoftDeleted(),
+        );
 
         return $data;
      }

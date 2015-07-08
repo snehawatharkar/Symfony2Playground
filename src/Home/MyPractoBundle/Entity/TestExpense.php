@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity()
  * @ORM\InheritanceType("SINGLE_TABLE")
  */
-class TestExpenses
+class TestExpense
 {
 	/**
      * @var integer $id
@@ -125,11 +125,11 @@ class TestExpenses
      */
     public function serialise()
     {
-        $data = array_merge(array(
+        $data = array(
             'practice_id'         => $this->getPracticeProfileId(),
             'test_expense_category_id' => $this->getTestExpenseCategory(),
             'test_expense_vendor_id' => $this->getTestExpenseVendor(),
-        ), parent::serialise());
+        );
 
         return $data;
      }

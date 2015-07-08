@@ -26,11 +26,15 @@ class PersonsController extends Controller
      */
     public function getPersonAction($personId)
     {
-    	$data = array(
-    		'name' => 'Ms. India',
-    		'id' => $personId,
-    		);
-    	return array('persons' => $data);
+    	$personManager = $this->get('home_my_practo.person_manager');
+
+        $person = $personManager->load($personId);
+
+        if (null === $person) {
+            return View::create(null, Codes::HTTP_NOT_FOUND);
+        }
+
+    	return $person->serialise();
     }
 
     /**
@@ -39,10 +43,16 @@ class PersonsController extends Controller
      */
     public function getPersonsAction()
     {
-    	$data = array(
-    		'name' => 'Mr. India',
-    		);
-    	return array('persons' => $data);
+        $personManager = $this->get('home_my_practo.person_manager');
+
+        $persons = $personManager->loadAll();
+        $personCount = $personManager->getCount();
+
+        if (null === $persons) {
+            return View::create(null, Codes::HTTP_NOT_FOUND);
+        }
+
+    	return View::create(array('persons' => $persons, 'count' => intval($personCount)), Codes::HTTP_OK);
     }
 
     /**
@@ -50,9 +60,20 @@ class PersonsController extends Controller
      *
      * @return view
      */
-    public function postPersonAction()
+    public function postPersonsAction()
     {
+        $postData = $this->getRequest()->request->all();
 
+        $personManager = $this->get('home_my_practo.person_manager');
+        $person = $personManager->add($postData);
+
+        $router = $this->get('router');
+        $personURL = $router->generate('get_person', array(
+            'personId' => $person->getId()), true);
+
+        return View::create($person->serialise(),
+            Codes::HTTP_CREATED,
+            array('Location' => $petrsonURL));
     }
 
     /**
@@ -60,11 +81,26 @@ class PersonsController extends Controller
      *
      * @param integer $personId - Person Id
      *
+     * @Route(name="patch_person", methods="PATCH", path="/{personId}.{_format}")
+     *
      * @return array
      */
     public function patchPersonAction($personId)
     {
+        $patchData = $this->getRequest()->request->all();
 
+        $personManager = $this->get('home_my_practo.person_manager');
+
+        $person = $personManager->load($personId);
+
+        if (null === $person) {
+            return View::create(null, Codes::HTTP_NOT_FOUND);
+        }
+
+        $personManager->update($person, $patchData);
+        $person = $personManager->load($personId);
+
+        return $person->serialise();
     }
 
     /**
@@ -72,10 +108,25 @@ class PersonsController extends Controller
      *
      * @param integer $personId - Person Id
      *
+     * @Route(name="delete_person", methods="DELETE", path="/{personId}.{_format}")
+     *
      * @return array
      */
     public function deletePersonAction($personId)
     {
+        $personManager = $this->get('home_my_practo.person_manager');
 
+        $person = $personManager->load($personId);
+
+        if (null === $person) {
+            return View::create(null, Codes::HTTP_NOT_FOUND);
+        }
+
+        try {
+            $personManager->delete($person);
+        }catch (Exception $e) {
+            return array('message' => 'failure');
+        }
+        return array('message' => 'success');
     }
 }

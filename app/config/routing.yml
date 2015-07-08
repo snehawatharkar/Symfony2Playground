@@ -7,5 +7,5 @@ persons_constrained:
     type:     annotation
     defaults: {_format: json}
     requirements:
-        personId: \d+
+        patientId: \d+
         _format: json|html|pdf

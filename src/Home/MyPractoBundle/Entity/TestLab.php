@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="test_labs")
  * @ORM\Entity()
  */
-class TestLabs
+class TestLab
 {
     /**
      * @var integer $id
